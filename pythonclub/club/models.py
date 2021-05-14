@@ -12,20 +12,20 @@ class Meeting(models.Model):
     meetingagenda=models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.meetingename
+        return self.meetingname
 
     class Meta:
         db_table='meeting'
         verbose_name_plural='meetings'
 
 class MeetingMinute(models.Model):
-    meetingminute=models.CharField(max_length=255)
+    meetingmin=models.CharField(max_length=255)
     meetingid=models.ForeignKey(Meeting, on_delete=models.DO_NOTHING)
     meetingattendance=models.ManyToManyField(User)
     minutestext=models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.meetingminute
+        return self.meetingmin
 
     class Meta:
         db_table='meetingminute'
