@@ -19,13 +19,13 @@ class Meeting(models.Model):
         verbose_name_plural='meetings'
 
 class MeetingMinute(models.Model):
-    meetingmin=models.CharField(max_length=255)
+    meetingminutename=models.CharField(max_length=255)
     meetingid=models.ForeignKey(Meeting, on_delete=models.DO_NOTHING)
     meetingattendance=models.ManyToManyField(User)
     minutestext=models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.meetingmin
+        return self.meetingminutename
 
     class Meta:
         db_table='meetingminute'

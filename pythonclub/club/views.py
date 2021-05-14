@@ -5,4 +5,4 @@ from .models import Meeting, MeetingMinute, Resource, Event
 def index(request): 
     return render(request, 'club/index.html')
 
-def members(request):    
+   
