@@ -8,3 +8,7 @@ def index(request):
 def resources(request):
     resource_list=Resource.objects.all()
     return render(request, 'club/resources.html', {'resource_list': resource_list})
+
+def meetings(request):
+    meeting_list=Meeting.objects.all()
+    return render(request, 'club/meetings.html', {'meeting_list': meeting_list})
