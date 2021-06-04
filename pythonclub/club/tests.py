@@ -2,6 +2,9 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Meeting, MeetingMinute, Resource, Event
 import datetime
+from .forms import MeetingForm, ResourceForm 
+from django.urls import reverse_lazy, reverse
+
 
 # Create your tests here.
 class MeetingTest(TestCase):
@@ -54,4 +57,34 @@ class EventTest(TestCase):
         self.assertEqual(str(Event._meta.db_table), 'event')
 
     def test_locationstring(self):
-        self.assertEqual(str(self.eventlocation), 'Seattle, WA')                                              
+        self.assertEqual(str(self.eventlocation), 'Seattle, WA')   
+
+
+class NewMeetingForm(TestCase):
+    def test_meetingform(self):
+        data={
+                'meetingname': 'Meeting1',
+                'meetingdescription': 'basic Python',
+                'meetingdate': '2021-05-28',
+                'meetingtime': '18:00:00',
+                'meetinglocation':'WA, Seattle 98108',
+                'meetingagenda':'First look at Python.'
+            }
+
+        form=MeetingForm(data)
+        self.assertTrue(form.is_valid)  
+
+
+class NewResourceForm(TestCase):
+    def test_resourceform(self):
+        data={
+                'resourcename': 'Introduction to Python',
+                'resourcetype': 'Python site',
+                'url': 'http://python.com',
+                'entrydate': '2021-06-04',
+                'userid': 'Nicholas',
+                'description': 'Python info'
+            } 
+
+        form=ResourceForm(data)
+        self.assertTrue(form.is_valid)                                                        
