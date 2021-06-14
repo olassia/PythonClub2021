@@ -65,8 +65,8 @@ class NewMeetingForm(TestCase):
         data={
                 'meetingname': 'Meeting1',
                 'meetingdescription': 'basic Python',
-                'meetingdate': '2021-05-28',
-                'meetingtime': '18:00:00',
+                'meetingdate': '2021,5,28',
+                'meetingtime': '18,00,00',
                 'meetinglocation':'WA, Seattle 98108',
                 'meetingagenda':'First look at Python.'
             }
@@ -81,10 +81,23 @@ class NewResourceForm(TestCase):
                 'resourcename': 'Introduction to Python',
                 'resourcetype': 'Python site',
                 'url': 'http://python.com',
-                'entrydate': '2021-06-04',
+                'entrydate': '2021,6,4',
                 'userid': 'Nicholas',
                 'description': 'Python info'
             } 
 
         form=ResourceForm(data)
-        self.assertTrue(form.is_valid)                                                        
+        self.assertTrue(form.is_valid)
+
+
+class New_Meeting_Authentication_Test(TestCase):
+    def setUp(self):
+        self.test_user=User.objects.create_user(username='testuser1', password='P@ssword01')
+        self.name=Resource.objects.create(resourcename='Introduction to Python')
+        self.meeting=Meeting.objects.create(meetingname='Meeting1', meetingdescription='basic Python', 
+            meetingdate=datetime.date(2021,5,28), meetingtime=datetime.time(18,30,00),
+            meetinglocation='WA, Seattle 98108', meetingagenda='First look at Python.')
+
+    def test_redirect_if_not_logged_in(self):
+        response=self.client.get(reverse('new meeting'))
+        self.assertRedirects(response, '/accounts/login/?next=/club/newmeeting/')
